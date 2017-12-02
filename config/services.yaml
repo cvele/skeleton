@@ -29,3 +29,6 @@ services:
         autowire: true
         tags:
             - { name: doctrine.event_subscriber }
+
+    # Creating alias for auth checker
+    Symfony\Component\Security\Core\Authorization\AuthorizationChecker: '@security.authorization_checker'

@@ -21,6 +21,8 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 username_parameter: _email
             provider: default
+            logout:
+                path: logout
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

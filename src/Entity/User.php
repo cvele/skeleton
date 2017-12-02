@@ -108,10 +108,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $password
+     * @param string|null $password
      * @return self
      */
-    public function setPassword(string $password)
+    public function setPassword(string $password = null)
     {
         $this->password = $password;
         return $this;

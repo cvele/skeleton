@@ -36,6 +36,7 @@ class UserManager
      */
     public function save($user) : UserInterface
     {
+        $user->setPassword(null);
         $this->em->persist($user);
         $this->em->flush();
         return $user;
