@@ -24,6 +24,9 @@ class SecurityController extends Controller
      *
      * @Route("/login", name="login")
      * @Route("/logout", name="logout")
+     *
+     * We are defining two routes for this method.
+     * Logout is a stub route as it is catched by event, this method is never triggered on logout.
      */
     public function loginAction(Request $request, AuthenticationUtils $authUtils, AuthorizationChecker $authChecker)
     {
@@ -48,6 +51,7 @@ class SecurityController extends Controller
      * @param Request $request
      * @param UserManager $userManager
      * @param AuthorizationChecker $authChecker
+     *
      * @Route("/register", name="user_registration")
      */
     public function registerAction(Request $request, UserManager $userManager, AuthorizationChecker $authChecker)
