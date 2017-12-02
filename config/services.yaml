@@ -24,11 +24,11 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    app.doctrine.hash_password_listener:
-        class: App\Doctrine\Event\Listener\HashPasswordListener
+    App\Event\Listener\HashPasswordListener:
+        class: App\Event\Listener\HashPasswordListener
         autowire: true
         tags:
-            - { name: doctrine.event_subscriber }
+            - { name: kernel.event_listener, event: user.pre.save, method: onUserPreSave }
 
     # Creating alias for auth checker
     Symfony\Component\Security\Core\Authorization\AuthorizationChecker: '@security.authorization_checker'
