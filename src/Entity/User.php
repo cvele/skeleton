@@ -44,6 +44,20 @@ class User implements UserInterface, \Serializable
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @var string
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @var string
+     */
+    private $lastname;
+
+    /**
      * @ORM\Column(name="is_active", type="boolean")
      * @var bool
      */
@@ -121,6 +135,60 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $firstname
+     * @return self
+     */
+    public function setFirstname(string $firstname)
+    {
+        $this->firstname = $firstname;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param string $lastname
+     * @return self;
+     */
+    public function setLastname(string $lastname)
+    {
+        $this->lastname = $lastname;
+        return $this;
+    }
+
+    /**
+     * @param bool $active
+     * @return self
+     */
+    public function setIsActive(bool $active = true)
+    {
+        $this->isActive = $active;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsActive() : bool
+    {
+        return $this->isActive;
+    }
+
+    /**
      * @return array
      */
     public function getRoles()
@@ -128,11 +196,10 @@ class User implements UserInterface, \Serializable
         return ['ROLE_USER'];
     }
 
-    /** We should erase credentials every time password is updated **/
+    /** We should erase credentials every time **/
     public function eraseCredentials()
     {
         $this->plainPassword = null;
-        $this->password = null;
     }
 
     /** @see \Serializable::serialize() */
