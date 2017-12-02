@@ -1,0 +1,15 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+    csrf_protection: { enabled: true }
+    #default_locale: en
+    #http_method_override: true
+    #trusted_hosts: ~
+
+    # uncomment this entire section to enable sessions
+    session:
+       handler_id: ~
+
+    #esi: ~
+    #fragments: ~
+    php_errors:
+        log: true
