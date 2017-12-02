@@ -34,16 +34,13 @@ class SecurityController extends Controller
             return $this->redirectToRoute('homepage');
         }
 
-        // get the login error if there is one
         $error = $authUtils->getLastAuthenticationError();
-
-        // last username entered by the user
         $lastUsername = $authUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', array(
+        return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error'         => $error,
-        ));
+        ]);
     }
 
 
@@ -95,8 +92,8 @@ class SecurityController extends Controller
             $userManager->save($user);
             return $this->redirectToRoute('homepage');
         }
-        return $this->render('security/change_password.html.twig', array(
+        return $this->render('security/change_password.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }
