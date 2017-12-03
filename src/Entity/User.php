@@ -14,6 +14,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface, \Serializable
 {
+    use Traits\EntityHydrationTrait;
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -36,12 +38,24 @@ class User implements UserInterface, \Serializable
     private $plainPassword;
 
     /**
+     * @ORM\Column(type="string", length=128, nullable=true)
+     * @var string
+     */
+    private $salt;
+
+    /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      * @var string
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @var string
+     */
+    private $emailCanonical;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -58,16 +72,22 @@ class User implements UserInterface, \Serializable
     private $lastname;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(name="is_active", type="boolean", nullable=false)
      * @var bool
      */
-    private $isActive;
+    private $active = true;
 
-    /** construct **/
-    public function __construct()
-    {
-        $this->isActive = true;
-    }
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    private $confirmationToken;
+
+    /**
+     * @ORM\Column(name="is_confirmed", type="boolean", nullable=false)
+     * @var bool
+     */
+    private $confirmed = false;
 
     public function getUsername()
     {
@@ -93,10 +113,37 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /** This is a stub method, required by interface. We don't use it with bcrypt **/
+    /**
+     * @return string
+     */
+    public function getEmailCanonical()
+    {
+        return $this->emailCanonical;
+    }
+
+    /**
+     * @param string $emailCanonical
+     * @return self
+     */
+    public function setEmailCanonical(string $emailCanonical)
+    {
+        $this->emailCanonical = $emailCanonical;
+        return $this;
+    }
+
     public function getSalt()
     {
         return null;
+    }
+
+    /**
+     * @param string|null $salt
+     * @return self
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+        return $this;
     }
 
     /**
@@ -171,10 +218,27 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @return string
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * @param string $confirmationToken
+     */
+    public function setConfirmationToken(string $confirmationToken)
+    {
+        $this->confirmationToken = $confirmationToken;
+        return $this;
+    }
+
+    /**
      * @param bool $active
      * @return self
      */
-    public function setIsActive(bool $active = true)
+    public function setActive(bool $active = true)
     {
         $this->isActive = $active;
         return $this;
@@ -183,9 +247,27 @@ class User implements UserInterface, \Serializable
     /**
      * @return bool
      */
-    public function getIsActive() : bool
+    public function getActive() : bool
     {
         return $this->isActive;
+    }
+
+    /**
+     * @param bool $confirmed
+     * @return self
+     */
+    public function setConfirmed(bool $confirmed = true)
+    {
+        $this->confirmed = $confirmed;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getConfirmed() : bool
+    {
+        return $this->confirmed;
     }
 
     /**

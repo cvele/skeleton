@@ -23,7 +23,8 @@ class ChangePasswordType extends AbstractType
             'message' => 'form.user.change_password.invalid_current_password',
         ];
 
-        $builder->add('current_password', PasswordType::class, [
+        $builder
+        ->add('current_password', PasswordType::class, [
             'label' => 'form.user.change_password.current_password',
             'mapped' => false,
             'constraints' => [

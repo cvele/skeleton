@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Service\UserManager;
+use App\Service\Security\UserManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
@@ -37,7 +37,8 @@ class UserFixtures extends Fixture
             $user->setLastname($this->faker->lastName);
             /** Will be hashed by App\Doctrine\Event\Listener\HashPasswordListener **/
             $user->setPlainPassword($this->faker->password);
-            $user->setIsActive($this->faker->boolean($chanceOfGettingTrue = 90));
+            $user->setActive($this->faker->boolean($chanceOfGettingTrue = 90));
+            $user->setConfirmed($this->faker->boolean($chanceOfGettingTrue = 80));
             $this->addReference($safeEmail, $user);
             $this->userManager->save($user);
         }

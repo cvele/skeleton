@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Service\UserManager;
 use App\Form\Type\UserType;
 use App\Form\Type\ChangePasswordType;
+use App\Service\Security\UserManipulator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -43,26 +43,25 @@ class SecurityController extends Controller
         ]);
     }
 
-
     /**
      * @param Request $request
-     * @param UserManager $userManager
+     * @param UserManipulator $userManipulator
      * @param AuthorizationChecker $authChecker
      *
      * @Route("/register", name="user_registration")
      */
-    public function registerAction(Request $request, UserManager $userManager, AuthorizationChecker $authChecker)
+    public function registerAction(Request $request, UserManipulator $userManipulator, AuthorizationChecker $authChecker)
     {
         if (true === $authChecker->isGranted('ROLE_USER')) {
             return $this->redirectToRoute('homepage');
         }
 
-        $user = $userManager->createUser();
+        $user = $userManipulator->createUserObject();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $userManager->save($user);
-            return $this->redirectToRoute('login');
+            $userManipulator->create($user);
+            return $this->render('registration/register_confirm.html.twig');
         }
 
         return $this->render(
@@ -74,12 +73,12 @@ class SecurityController extends Controller
      * Change user password.
      *
      * @param Request $request
-     * @param UserManager $userManager
+     * @param UserManipulator $userManipulator
      * @return Response
      *
      * @Route("/change-password", name="change_password")
      */
-    public function changePasswordAction(Request $request, UserManager $userManager)
+    public function changePasswordAction(Request $request, UserManipulator $userManipulator)
     {
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
@@ -89,7 +88,7 @@ class SecurityController extends Controller
         $form = $this->createForm(ChangePasswordType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $userManager->save($user);
+            $userManipulator->changePassword($user, $user->getPlainPassword());
             return $this->redirectToRoute('homepage');
         }
         return $this->render('security/change_password.html.twig', [
