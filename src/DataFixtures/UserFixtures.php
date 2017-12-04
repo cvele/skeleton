@@ -39,7 +39,15 @@ class UserFixtures extends Fixture
             $user->setActive($this->faker->boolean($chanceOfGettingTrue = 90));
             $user->setConfirmed($this->faker->boolean($chanceOfGettingTrue = 80));
             $this->userManipulator->create($user);
-            $this->addReference($safeEmail, $user);
+            $this->addReference("user-reference-" . $safeEmail, $user);
         }
+    }
+
+    /** @inheritDoc **/
+    public function getDependencies()
+    {
+        return [
+            UserFixtures::class,
+        ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -98,6 +99,19 @@ class User implements UserInterface, \Serializable
      * @var bool
      */
     private $confirmed = false;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="Address", mappedBy="user")
+     * @var ArrayCollection
+     */
+    private $addresses;
+
+    /** construct **/
+    public function __construct()
+    {
+         $this->addresses = new ArrayCollection();
+    }
 
     public function getUsername()
     {
@@ -316,5 +330,33 @@ class User implements UserInterface, \Serializable
             $this->email,
             $this->password,
         ) = unserialize($serialized);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
+
+    /**
+     * @param Address $address
+     * @return self
+     */
+    public function addAddress(Address $address)
+    {
+        $address->setUser($this);
+        $this->addresses[] = $address;
+        return $this;
+    }
+
+    /**
+     * @param  Address $address
+     * @return self
+     */
+    public function removeAddress(Address $address) {
+        $this->addresses->removeElement($address);
+        return $this;
     }
 }
