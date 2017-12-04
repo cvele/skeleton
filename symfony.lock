@@ -301,5 +301,11 @@
             "version": "3.3",
             "ref": "55a81726745b54cc6f8d845f1a094ed7d9ed2e32"
         }
+    },
+    "behat/transliterator": {
+        "version": "v1.2.0"
+    },
+    "gedmo/doctrine-extensions": {
+        "version": "v2.4.31"
     }
 }
