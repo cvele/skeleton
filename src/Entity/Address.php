@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Represents an Address.
@@ -13,19 +12,8 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * @ORM\Entity
  * @ORM\Table(name="addresses")
  */
-class Address
+class Address extends Entity
 {
-    /**
-     * Hook timestampable behavior
-     * updates createdAt, updatedAt fields
-     */
-    use TimestampableEntity;
-
-    /**
-     * Adds fromArray method, for easy hydration
-     */
-    use Traits\EntityHydrationTrait;
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -75,6 +63,7 @@ class Address
     public function setUser(UserInterface $user)
     {
         $this->user = $user;
+        $this->user->addAddress($this);
         return $this;
     }
 

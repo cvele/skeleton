@@ -7,25 +7,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Table(name="users")
  * @ORM\Entity()
  * @UniqueEntity(fields="email", message="Email already taken")
  */
-class User implements UserInterface, \Serializable
+class User extends Entity implements UserInterface, \Serializable
 {
-    /**
-     * Hook timestampable behavior
-     * updates createdAt, updatedAt fields
-     */
-    use TimestampableEntity;
-
-    /**
-     * Adds fromArray method, for easy hydration
-     */
-    use Traits\EntityHydrationTrait;
 
     /**
      * @ORM\Column(type="integer")
@@ -106,6 +95,33 @@ class User implements UserInterface, \Serializable
      * @var ArrayCollection
      */
     private $addresses;
+
+    /**
+     * Many Users have One Tenant.
+     * @ORM\ManyToOne(targetEntity="Tenant", inversedBy="users")
+     * @ORM\JoinColumn(name="tenant_id", referencedColumnName="id")
+     * @var Tenant
+     */
+    private $tenant
+
+    /**
+     * @return Tenant
+     */
+    public function getTenant()
+    {
+        return $this->tenant;
+    }
+
+    /**
+     * @param Tenant $tenant
+     * @return self
+     */
+    public function setTenant(Tenant $tenant)
+    {
+        $this->tenant = $tenant;
+        $this->tenant->addUser($this);
+        return $this;
+    };
 
     /** construct **/
     public function __construct()
