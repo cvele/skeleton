@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -18,6 +18,7 @@ class Address extends TenantAwareEntity
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
      * @var int
      */
     private $id;
@@ -25,6 +26,7 @@ class Address extends TenantAwareEntity
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     *
      * @var string
      */
     private $city;
@@ -32,6 +34,7 @@ class Address extends TenantAwareEntity
     /**
      * @ORM\Column(type="string", length=16)
      * @Assert\NotBlank()
+     *
      * @var string
      */
     private $zip;
@@ -39,6 +42,7 @@ class Address extends TenantAwareEntity
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     *
      * @var string
      */
     private $address;
@@ -46,6 +50,7 @@ class Address extends TenantAwareEntity
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     *
      * @var string
      */
     private $address2;
@@ -53,6 +58,7 @@ class Address extends TenantAwareEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="addresses")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *
      * @var UserInterface
      */
     protected $user;
@@ -64,11 +70,12 @@ class Address extends TenantAwareEntity
     {
         $this->user = $user;
         $this->user->addAddress($this);
+
         return $this;
     }
 
     /**
-     * Get the value of Id
+     * Get the value of Id.
      *
      * @return int
      */
@@ -78,7 +85,7 @@ class Address extends TenantAwareEntity
     }
 
     /**
-     * Get the value of Address
+     * Get the value of Address.
      *
      * @return string
      */
@@ -88,7 +95,7 @@ class Address extends TenantAwareEntity
     }
 
     /**
-     * Set the value of Address
+     * Set the value of Address.
      *
      * @param string $address
      *
@@ -102,7 +109,7 @@ class Address extends TenantAwareEntity
     }
 
     /**
-     * Get the value of Address
+     * Get the value of Address.
      *
      * @return string
      */
@@ -112,7 +119,7 @@ class Address extends TenantAwareEntity
     }
 
     /**
-     * Set the value of Address
+     * Set the value of Address.
      *
      * @param string $address2
      *
@@ -126,7 +133,7 @@ class Address extends TenantAwareEntity
     }
 
     /**
-     * Get the value of User
+     * Get the value of User.
      *
      * @return UserInterface
      */
@@ -136,7 +143,7 @@ class Address extends TenantAwareEntity
     }
 
     /**
-     * Get the value of City
+     * Get the value of City.
      *
      * @return string
      */
@@ -146,7 +153,7 @@ class Address extends TenantAwareEntity
     }
 
     /**
-     * Set the value of City
+     * Set the value of City.
      *
      * @param string $city
      *
@@ -160,7 +167,7 @@ class Address extends TenantAwareEntity
     }
 
     /**
-     * Get the value of Zip
+     * Get the value of Zip.
      *
      * @return string
      */
@@ -170,7 +177,7 @@ class Address extends TenantAwareEntity
     }
 
     /**
-     * Set the value of Zip
+     * Set the value of Zip.
      *
      * @param string $zip
      *
@@ -182,5 +189,4 @@ class Address extends TenantAwareEntity
 
         return $this;
     }
-
 }

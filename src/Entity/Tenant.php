@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,6 +21,7 @@ class Tenant extends Entity
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
      * @var int
      */
     private $id;
@@ -28,20 +29,51 @@ class Tenant extends Entity
     /**
      * @ORM\Column(type="string", length=255, unique=true, nullable=false)
      * @Assert\NotBlank()
+     *
      * @var string
      */
     private $name;
 
     /**
      * One Tenant has Many Users.
+     *
      * @ORM\OneToMany(targetEntity="User", mappedBy="tenant")
+     *
      * @var ArrayCollection
      */
     private $users;
 
+    /**
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     *
+     * @var UserInterface
+     */
+    private $owner;
+
     public function __construct()
     {
-        $this->users = new ArrayCollection;
+        $this->users = new ArrayCollection();
+    }
+
+    /**
+     * @return UserInterface
+     */
+    public function getOwner(): UserInterface
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param UserInterface $owner
+     *
+     * @return static
+     */
+    public function setOwner(UserInterface $owner)
+    {
+        $this->owner = $owner;
+
+        return $this;
     }
 
     /**
@@ -60,6 +92,7 @@ class Tenant extends Entity
     public function setName(string $name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -81,20 +114,25 @@ class Tenant extends Entity
 
     /**
      * @param UserInterface $user
+     *
      * @return self
      */
     public function addUser(UserInterface $user)
     {
         $this->users[] = $user;
+
         return $this;
     }
 
     /**
-     * @param  UserInterface $user
+     * @param UserInterface $user
+     *
      * @return self
      */
-    public function removeUser(UserInterface $user) {
+    public function removeUser(UserInterface $user)
+    {
         $this->users->removeElement($user);
+
         return $this;
     }
 }

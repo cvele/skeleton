@@ -5,8 +5,10 @@ namespace App\Entity\Traits;
 trait EntityHydrationTrait
 {
     /**
-     * Populates entity from given array
-     * @param  array  $data
+     * Populates entity from given array.
+     *
+     * @param array $data
+     *
      * @return mixed
      */
     public static function fromArray(array $data)
@@ -22,7 +24,7 @@ trait EntityHydrationTrait
 
                 if (null !== $typeHint && true === is_array($value)) {
                     $paramClass = $typeHint->newInstance();
-                    $paramClass = new $paramClass;
+                    $paramClass = new $paramClass();
                     $value = $paramClass::fromArray($value);
                 } elseif (true === is_array($value)) {
                     $value = array_pop($value);

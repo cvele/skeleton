@@ -22,23 +22,23 @@ class UserType extends AbstractType
         $builder
             ->add('tenant', TenantType::class, [
                 'label' => false,
-                'constraints' => [new Valid]
+                'constraints' => [new Valid()],
             ])
             ->add('email', EmailType::class, ['label' => 'form.user.register.email'])
             ->add('firstname', TextType::class, ['label' => 'form.user.register.firstname'])
             ->add('lastname', TextType::class, ['label' => 'form.user.register.lastname'])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options'  => ['label' => 'form.user.register.new_password'],
+                'first_options' => ['label' => 'form.user.register.new_password'],
                 'second_options' => ['label' => 'form.user.register.new_password_repeat'],
             ])
             ->add('termsAccepted', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => new IsTrue(),
-                'label' => 'form.user.register.terms_accepted'
+                'label' => 'form.user.register.terms_accepted',
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'form.user.register.submit'
+                'label' => 'form.user.register.submit',
             ])
         ;
     }
@@ -47,7 +47,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'csrf_token_id' => 'create_user'
+            'csrf_token_id' => 'create_user',
         ]);
     }
 }

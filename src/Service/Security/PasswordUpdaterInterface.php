@@ -16,8 +16,6 @@ interface PasswordUpdaterInterface
      * existing hash with a wrong one).
      *
      * @param UserInterface $user
-     *
-     * @return void
      */
     public function hashPassword(UserInterface $user);
 }

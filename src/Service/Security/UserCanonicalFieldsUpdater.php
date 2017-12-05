@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserCanonicalFieldsUpdater
 {
-    /** @var CanonicalizerInterface **/
+    /** @var CanonicalizerInterface * */
     private $emailCanonicalizer;
 
     /**
@@ -24,8 +24,7 @@ class UserCanonicalFieldsUpdater
     }
 
     /**
-     * @param  UserInterface $user
-     * @return void
+     * @param UserInterface $user
      */
     public function updateCanonicalFields(UserInterface $user)
     {

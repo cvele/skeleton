@@ -10,13 +10,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class TenantFilterConfiguratorListener
 {
-    /** @var ObjectManager **/
+    /** @var ObjectManager * */
     protected $om;
 
-    /** @var AuthorizationChecker **/
+    /** @var AuthorizationChecker * */
     private $authorizationChecker;
 
-    /** @var TokenStorageInterface **/
+    /** @var TokenStorageInterface * */
     private $tokenStorage;
 
     public function __construct(ObjectManager $om, AuthorizationChecker $authorizationChecker, TokenStorageInterface $tokenStorage)

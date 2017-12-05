@@ -8,29 +8,29 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 /** @author Vladimir Cvetic <vladimir@ferdinand.rs> **/
 class Handler
 {
-    /** @var EntityManagerInterface **/
+    /** @var EntityManagerInterface * */
     private $entityManager;
 
-    /** @var EventDispatcherInterface **/
+    /** @var EventDispatcherInterface * */
     private $dispatcher;
 
     /**
-     * @param EntityManagerInterface $entityManager
+     * @param EntityManagerInterface   $entityManager
      * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(EntityManagerInterface $entityManager, EventDispatcherInterface $dispatcher)
     {
-        /** @var EntityManagerInterface **/
+        /* @var EntityManagerInterface **/
         $this->entityManager = $entityManager;
 
-        /** @var EventDispatcherInterface **/
+        /* @var EventDispatcherInterface **/
         $this->dispatcher = $dispatcher;
     }
 
     /**
      * @return EntityManagerInterface
      */
-    public function getEntityManager() : EntityManagerInterface
+    public function getEntityManager(): EntityManagerInterface
     {
         return $this->entityManager;
     }
@@ -38,7 +38,7 @@ class Handler
     /**
      * @return EventDispatcherInterface
      */
-    public function getEventDispatcher() : EventDispatcherInterface
+    public function getEventDispatcher(): EventDispatcherInterface
     {
         return $this->dispatcher;
     }

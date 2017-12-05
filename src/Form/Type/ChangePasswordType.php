@@ -39,7 +39,7 @@ class ChangePasswordType extends AbstractType
             'invalid_message' => 'form.user.change_password.password_mismatch',
         ])
         ->add('save', SubmitType::class, [
-            'label' => 'form.user.change_password.submit'
+            'label' => 'form.user.change_password.submit',
         ])
         ;
     }

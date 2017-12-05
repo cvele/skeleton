@@ -12,10 +12,10 @@ use League\Tactician\CommandBus;
 
 class UserFixtures extends Fixture
 {
-    /** @var FakerGenerator **/
+    /** @var FakerGenerator * */
     private $fakerFactory;
 
-    /** @var CommandBus **/
+    /** @var CommandBus * */
     private $commandBus;
 
     /**
@@ -29,23 +29,23 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        for ($i=0; $i < 20; $i++) {
+        for ($i = 0; $i < 20; ++$i) {
             $safeEmail = $this->faker->unique()->safeEmail;
-            $user = new User;
+            $user = new User();
             $user->setEmail($safeEmail);
             $user->setFirstname($this->faker->firstName);
             $user->setLastname($this->faker->lastName);
             $user->setPlainPassword($this->faker->password);
             $user->setActive($this->faker->boolean($chanceOfGettingTrue = 90));
             $user->setConfirmed($this->faker->boolean($chanceOfGettingTrue = 80));
-            $user->setTenant($this->getReference("tenant-" . rand(1,2)));
+            $user->setTenant($this->getReference('tenant-'.rand(1, 2)));
             $command = new RegisterUserCommand($user);
             $this->commandBus->handle($command);
-            $this->addReference("user-reference-" . $safeEmail, $user);
+            $this->addReference('user-reference-'.$safeEmail, $user);
         }
     }
 
-    /** @inheritDoc **/
+    /** {@inheritdoc} **/
     public function getDependencies()
     {
         return [

@@ -17,13 +17,13 @@ use Doctrine\ORM\EntityManagerInterface;
 /** User Handler **/
 class UserHandler extends Handler
 {
-    /** @var PasswordUpdaterInterface **/
+    /** @var PasswordUpdaterInterface * */
     private $passwordUpdater;
 
-    /** @var UserCanonicalFieldsUpdater **/
+    /** @var UserCanonicalFieldsUpdater * */
     private $canonicalFieldsUpdater;
 
-    /** @var TokenGeneratorInterface **/
+    /** @var TokenGeneratorInterface * */
     private $tokenGenerator;
 
     public function __construct(
@@ -32,8 +32,7 @@ class UserHandler extends Handler
         TokenGeneratorInterface $tokenGenerator,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $dispatcher
-        )
-    {
+        ) {
         parent::__construct($entityManager, $dispatcher);
         $this->passwordUpdater = $passwordUpdater;
         $this->canonicalFieldsUpdater = $canonicalFieldsUpdater;
@@ -84,5 +83,4 @@ class UserHandler extends Handler
         $event = new UserEvent($user);
         $this->getEventDispatcher()->dispatch(EventRegistry::USER_POST_PASSWORD_CHANGED, $event);
     }
-
 }

@@ -9,8 +9,10 @@ class TenantAwareEntity extends Entity
 {
     /**
      * Many Objects have One Tenant.
+     *
      * @ORM\ManyToOne(targetEntity="Tenant", cascade={"persist"})
      * @ORM\JoinColumn(name="tenant_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     *
      * @var Tenant
      */
     private $tenant;
@@ -25,11 +27,13 @@ class TenantAwareEntity extends Entity
 
     /**
      * @param Tenant $tenant
+     *
      * @return self
      */
     public function setTenant(Tenant $tenant)
     {
         $this->tenant = $tenant;
+
         return $this;
     }
 

@@ -8,7 +8,7 @@ class TokenGenerator implements TokenGeneratorInterface
     /**
      * @return string
      */
-    public function generate() : string
+    public function generate(): string
     {
         return rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
     }

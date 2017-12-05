@@ -19,7 +19,7 @@ use League\Tactician\CommandBus;
 
 class SecurityController extends Controller
 {
-    /** @var CommandBus **/
+    /** @var CommandBus * */
     private $commandBus;
 
     /**
@@ -31,9 +31,10 @@ class SecurityController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param AuthenticationUtils $authUtils
+     * @param Request              $request
+     * @param AuthenticationUtils  $authUtils
      * @param AuthorizationChecker $authChecker
+     *
      * @return Response
      *
      * @Route("/login", name="login")
@@ -53,12 +54,12 @@ class SecurityController extends Controller
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
-            'error'         => $error,
+            'error' => $error,
         ]);
     }
 
     /**
-     * @param Request $request
+     * @param Request              $request
      * @param AuthorizationChecker $authChecker
      *
      * @Route("/register", name="user_registration")
@@ -69,12 +70,13 @@ class SecurityController extends Controller
             return $this->redirectToRoute('homepage');
         }
 
-        $user = new User;
+        $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $command = new RegisterUserCommand($user);
             $this->commandBus->handle($command);
+
             return $this->render('registration/register_confirm.html.twig');
         }
 
@@ -87,6 +89,7 @@ class SecurityController extends Controller
      * Change user password.
      *
      * @param Request $request
+     *
      * @return Response
      *
      * @Route("/change-password", name="change_password")
@@ -103,8 +106,10 @@ class SecurityController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $command = new ChangePasswordCommand($user->getEmail(), $user->getPlainPassword());
             $this->commandBus->handle($command);
+
             return $this->redirectToRoute('homepage');
         }
+
         return $this->render('security/change_password.html.twig', [
             'form' => $form->createView(),
         ]);

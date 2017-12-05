@@ -4,10 +4,10 @@ namespace App\Service\CommandBus\Command;
 
 class ChangePasswordCommand
 {
-    /** @var string **/
+    /** @var string * */
     private $email;
 
-    /** @var string **/
+    /** @var string * */
     private $password;
 
     /**
