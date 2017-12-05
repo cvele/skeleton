@@ -7,8 +7,8 @@ use App\Entity\Tenant;
 use App\Entity\Address;
 use PHPUnit\Framework\TestCase;
 
-class AddressTest extends TestCase {
-
+class AddressTest extends TestCase
+{
     /**
      * @var Address
      */
@@ -28,7 +28,7 @@ class AddressTest extends TestCase {
      */
     public function testGetterAndSetter($data)
     {
-        foreach($data as $property => $value) {
+        foreach ($data as $property => $value) {
             $setter = "set" . ucfirst($property);
             $getter = "get" . ucfirst($property);
             $this->object->$setter($value);
@@ -40,7 +40,6 @@ class AddressTest extends TestCase {
 
     public function addressDataProvider()
     {
-
         $data = [
             [[
                 'createdAt' => new \DateTime(),
