@@ -44,7 +44,7 @@ class Tenant extends Entity
     private $users;
 
     /**
-     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\OneToOne(targetEntity="User", cascade={"persist"})
      * @ORM\JoinColumn(name="owner_id", referencedColumnName="id", onDelete="cascade")
      *
      * @var UserInterface
@@ -59,7 +59,7 @@ class Tenant extends Entity
     /**
      * @return UserInterface
      */
-    public function getOwner(): UserInterface
+    public function getOwner()
     {
         return $this->owner;
     }
