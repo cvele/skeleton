@@ -32,8 +32,8 @@ class AddressFixtures extends Fixture implements DependentFixtureInterface
             $address->setCity($this->faker->city);
             $address->setZip($this->faker->postcode);
             $address->setUser($this->getReference("user-reference-" . $user->getEmail()));
+            $address->setTenant($user->getTenant());
             $manager->persist($address);
-            $this->getReference("user-reference-" . $user->getEmail());
         }
         $manager->flush();
     }

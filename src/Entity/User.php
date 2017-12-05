@@ -15,7 +15,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User extends Entity implements UserInterface, \Serializable
 {
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -98,30 +97,11 @@ class User extends Entity implements UserInterface, \Serializable
 
     /**
      * Many Users have One Tenant.
-     * @ORM\ManyToOne(targetEntity="Tenant", inversedBy="users")
-     * @ORM\JoinColumn(name="tenant_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Tenant", inversedBy="users", cascade={"persist"})
+     * @ORM\JoinColumn(name="tenant_id", referencedColumnName="id", onDelete="CASCADE")
      * @var Tenant
      */
-    private $tenant
-
-    /**
-     * @return Tenant
-     */
-    public function getTenant()
-    {
-        return $this->tenant;
-    }
-
-    /**
-     * @param Tenant $tenant
-     * @return self
-     */
-    public function setTenant(Tenant $tenant)
-    {
-        $this->tenant = $tenant;
-        $this->tenant->addUser($this);
-        return $this;
-    };
+    private $tenant;
 
     /** construct **/
     public function __construct()
@@ -362,7 +342,6 @@ class User extends Entity implements UserInterface, \Serializable
      */
     public function addAddress(Address $address)
     {
-        $address->setUser($this);
         $this->addresses[] = $address;
         return $this;
     }
@@ -375,4 +354,24 @@ class User extends Entity implements UserInterface, \Serializable
         $this->addresses->removeElement($address);
         return $this;
     }
+
+    /**
+     * @param Tenant $tenant
+     * @return self
+     */
+    public function setTenant(Tenant $tenant)
+    {
+        $this->tenant = $tenant;
+        $this->tenant->addUser($this);
+        return $this;
+    }
+
+    /**
+     * @return Tenant
+     */
+    public function getTenant()
+    {
+        return $this->tenant;
+    }
+
 }

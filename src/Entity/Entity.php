@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use App\Entity\Traits;
+
 class Entity
 {
     /**

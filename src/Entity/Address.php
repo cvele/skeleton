@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="addresses")
  */
-class Address extends Entity
+class Address extends TenantAwareEntity
 {
     /**
      * @ORM\Column(type="integer")

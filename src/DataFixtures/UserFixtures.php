@@ -29,7 +29,7 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        for ($i=0; $i < 10; $i++) {
+        for ($i=0; $i < 20; $i++) {
             $safeEmail = $this->faker->unique()->safeEmail;
             $user = $this->userManipulator->createUserObject();
             $user->setEmail($safeEmail);
@@ -38,6 +38,7 @@ class UserFixtures extends Fixture
             $user->setPlainPassword($this->faker->password);
             $user->setActive($this->faker->boolean($chanceOfGettingTrue = 90));
             $user->setConfirmed($this->faker->boolean($chanceOfGettingTrue = 80));
+            $user->setTenant($this->getReference("tenant-" . rand(1,2)));
             $this->userManipulator->create($user);
             $this->addReference("user-reference-" . $safeEmail, $user);
         }
@@ -47,7 +48,7 @@ class UserFixtures extends Fixture
     public function getDependencies()
     {
         return [
-            UserFixtures::class,
+            TenantFixtures::class,
         ];
     }
 }
