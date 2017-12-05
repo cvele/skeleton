@@ -5,6 +5,7 @@ services:
             - '@App\Service\Security\PasswordUpdaterInterface'
             - '@App\Service\Security\UserCanonicalFieldsUpdater'
             - '@App\Service\TokenGeneratorInterface'
+            - '@League\Tactician\CommandBus'
             - '@Doctrine\ORM\EntityManagerInterface'
             - '@Symfony\Component\EventDispatcher\EventDispatcherInterface'
         tags:
