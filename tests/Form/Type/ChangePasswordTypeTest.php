@@ -4,6 +4,7 @@ namespace App\Tests\Form\Type;
 
 use App\Entity\User;
 use App\Form\Type\ChangePasswordType;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ChangePasswordTypeTest extends BaseTypeTestCase
 {
@@ -19,6 +20,7 @@ class ChangePasswordTypeTest extends BaseTypeTestCase
         $form->submit($formData);
 
         $this->assertTrue($form->isSynchronized());
+        $this->assertInstanceOf(UserInterface::class, $object);
         $this->assertEquals($object, $form->getData());
 
         $view = $form->createView();
