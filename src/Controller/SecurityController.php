@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\Type\UserType;
 use App\Form\Type\ChangePasswordType;
 use App\Service\CommandBus\Command\RegisterUserCommand;
