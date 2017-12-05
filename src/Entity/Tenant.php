@@ -6,12 +6,14 @@ use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Represents an Tenant.
  *
  * @ORM\Entity
  * @ORM\Table(name="tenants")
+ * @UniqueEntity(fields="name", message="Organization name already taken")
  */
 class Tenant extends Entity
 {
@@ -24,7 +26,7 @@ class Tenant extends Entity
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
      * @Assert\NotBlank()
      * @var string
      */
@@ -36,10 +38,11 @@ class Tenant extends Entity
      * @var ArrayCollection
      */
     private $users;
+
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -58,20 +61,9 @@ class Tenant extends Entity
     /**
      * @return ArrayCollection
      */
-    public function getUsers(): ArrayCollection
+    public function getUsers()
     {
         return $this->users;
-    }
-
-    /**
-     * @param ArrayCollection $users
-     *
-     * @return static
-     */
-    public function setUsers(ArrayCollection $users)
-    {
-        $this->users = $users;
-        return $this;
     }
 
     /**
@@ -88,7 +80,6 @@ class Tenant extends Entity
      */
     public function addUser(UserInterface $user)
     {
-        $user->add($this);
         $this->users[] = $user;
         return $this;
     }
