@@ -39,6 +39,11 @@ class Tenant extends Entity
      */
     private $users;
 
+    public function __construct()
+    {
+        $this->users = new ArrayCollection;
+    }
+
     /**
      * @return string
      */
@@ -69,7 +74,7 @@ class Tenant extends Entity
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
