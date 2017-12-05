@@ -109,6 +109,14 @@ class User extends Entity implements UserInterface, \Serializable
          $this->addresses = new ArrayCollection();
     }
 
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getUsername()
     {
         /** We are faking username field, required by interface **/
@@ -153,7 +161,7 @@ class User extends Entity implements UserInterface, \Serializable
 
     public function getSalt()
     {
-        return null;
+        return $this->salt;
     }
 
     /**
@@ -206,7 +214,7 @@ class User extends Entity implements UserInterface, \Serializable
      */
     public function getFirstname()
     {
-        return $this->plainPassword;
+        return $this->firstname;
     }
 
     /**
@@ -246,9 +254,9 @@ class User extends Entity implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $confirmationToken
+     * @param string|null $confirmationToken
      */
-    public function setConfirmationToken(string $confirmationToken)
+    public function setConfirmationToken(string $confirmationToken = null)
     {
         $this->confirmationToken = $confirmationToken;
         return $this;
