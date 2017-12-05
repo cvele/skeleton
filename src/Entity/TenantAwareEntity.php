@@ -32,4 +32,9 @@ class TenantAwareEntity extends Entity
         $this->tenant = $tenant;
         return $this;
     }
+
+    public function getTenantFieldName()
+    {
+        return 'tenant_id';
+    }
 }

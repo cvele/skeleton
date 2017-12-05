@@ -2,6 +2,7 @@
 
 namespace App\Doctrine\Filter;
 
+use App\Entity\Tenant;
 use App\Entity\TenantAwareEntity;
 use Doctrine\ORM\Mapping\ClassMetaData;
 use Doctrine\ORM\Query\Filter\SQLFilter;
@@ -15,11 +16,12 @@ class TenantFilter extends SQLFilter
             return ''; //returning empty string so that the query will not be modified
         }
 
-        if (null === $this->getParameter('tenant', null)) {
+        $tenant = $this->getParameter(Tenant::class, null);
+        if (!$tenant instanceof Tenant) {
             return ''; //returning empty string so that the query will not be modified
         }
 
-        $query = sprintf('%s.%s = %s', $targetTableAlias, 'tenant_id', $this->getParameter('tenant_id'));
+        $query = sprintf('%s.%s = %s', $targetTableAlias, $class->getTenantFieldName(), $tenant->getId());
 
         return $query;
     }

@@ -44,7 +44,7 @@ class TenantFilterConfiguratorListener
             } catch (\InvalidArgumentException $e) {
                 return false;
             }
-            $filter->setParameter('tenant_id', $tenant->getId());
+            $filter->setParameter(Tenant::class, $tenant);
         }
     }
 }
