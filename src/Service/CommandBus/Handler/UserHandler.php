@@ -6,11 +6,13 @@ use App\Entity\User;
 use App\Event\UserEvent;
 use App\Event\EventRegistry;
 use App\Service\CommandBus\Handler;
+use App\Service\CommandBus\Command\CreateTenantCommand;
 use App\Service\CommandBus\Command\RegisterUserCommand;
 use App\Service\CommandBus\Command\ChangePasswordCommand;
 use App\Service\Security\PasswordUpdaterInterface;
 use App\Service\Security\UserCanonicalFieldsUpdater;
 use App\Service\TokenGeneratorInterface;
+use League\Tactician\CommandBus;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -30,10 +32,11 @@ class UserHandler extends Handler
         PasswordUpdaterInterface $passwordUpdater,
         UserCanonicalFieldsUpdater $canonicalFieldsUpdater,
         TokenGeneratorInterface $tokenGenerator,
+        CommandBus $commandBus,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $dispatcher
         ) {
-        parent::__construct($entityManager, $dispatcher);
+        parent::__construct($commandBus, $entityManager, $dispatcher);
         $this->passwordUpdater = $passwordUpdater;
         $this->canonicalFieldsUpdater = $canonicalFieldsUpdater;
         $this->tokenGenerator = $tokenGenerator;
@@ -85,7 +88,6 @@ class UserHandler extends Handler
         $user->setPlainPassword($command->getPassword());
         $this->passwordUpdater->hashPassword($user);
         $this->getEntityManager()->persist($user);
-        $this->getEntityManager()->flush();
 
         $event = new UserEvent($user);
         $this->getEventDispatcher()->dispatch(EventRegistry::USER_POST_PASSWORD_CHANGED, $event);
