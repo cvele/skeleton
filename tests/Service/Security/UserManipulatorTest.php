@@ -1,24 +1,14 @@
 <?php
 
-/*
- * This file is part of the FOSUserBundle package.
- *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+namespace App\Tests\Service\Security;
 
-namespace FOS\UserBundle\Tests\Util;
-
-use App\Entity\User;
+use App\Tests\TestUser;
 use App\Event\EventRegistry;
 use App\Service\CanonicalizerInterface;
 use App\Service\Security\UserManager;
 use App\Service\Security\UserManipulator;
 use App\Service\Security\PasswordUpdaterInterface;
 use App\Service\Security\UserCanonicalFieldsUpdater;
-use App\Tests\TestUser;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
 use App\Service\TokenGeneratorInterface;
