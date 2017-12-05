@@ -3,6 +3,7 @@
 namespace App\Service\CommandBus;
 
 use Doctrine\ORM\EntityManagerInterface;
+use League\Tactician\CommandBus;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /** @author Vladimir Cvetic <vladimir@ferdinand.rs> **/
@@ -14,12 +15,19 @@ class Handler
     /** @var EventDispatcherInterface * */
     private $dispatcher;
 
+    /** @var CommandBus * */
+    private $commandBus;
+
     /**
+     * @param CommandBus $commandBus
      * @param EntityManagerInterface   $entityManager
      * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct(EntityManagerInterface $entityManager, EventDispatcherInterface $dispatcher)
+    public function __construct(CommandBus $commandBus, EntityManagerInterface $entityManager, EventDispatcherInterface $dispatcher)
     {
+        /* @var CommandBus **/
+        $this->commandBus = $commandBus;
+
         /* @var EntityManagerInterface **/
         $this->entityManager = $entityManager;
 
@@ -41,5 +49,13 @@ class Handler
     public function getEventDispatcher(): EventDispatcherInterface
     {
         return $this->dispatcher;
+    }
+
+    /**
+     * @return CommandBus
+     */
+    public function getCommandBus(): CommandBus
+    {
+        return $this->commandBus;
     }
 }
