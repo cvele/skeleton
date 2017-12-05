@@ -1,3 +1,7 @@
+imports:
+    - { resource: services/doctrine.yaml }
+    - { resource: services/security.yaml }
+
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
@@ -23,32 +27,3 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
-
-    # Creating alias for auth checker
-    Symfony\Component\Security\Core\Authorization\AuthorizationChecker: '@security.authorization_checker'
-    App\Service\Security\UserManagerInterface: '@App\Service\Security\UserManager'
-    App\Service\Security\UserManager:
-        class: App\Service\Security\UserManager
-    App\Service\Security\PasswordUpdaterInterface: '@App\Service\Security\PasswordUpdater'
-    App\Service\Security\PasswordUpdater:
-        class: App\Service\Security\PasswordUpdater
-    App\Service\CanonicalizerInterface: '@App\Service\Canonicalizer'
-    App\Service\Canonicalizer:
-        class: App\Service\Canonicalizer
-    App\Service\TokenGeneratorInterface: '@App\Service\TokenGenerator'
-    App\Service\TokenGenerator:
-        class: App\Service\TokenGenerator
-
-    gedmo.listener.timestampable:
-        class: Gedmo\Timestampable\TimestampableListener
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-        calls:
-            - [ setAnnotationReader, [ "@annotation_reader" ] ]
-
-    gedmo.listener.sluggable:
-        class: Gedmo\Sluggable\SluggableListener
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-        calls:
-            - [ setAnnotationReader, [ "@annotation_reader" ] ]
