@@ -401,12 +401,18 @@ class User extends Entity implements UserInterface, \Serializable
     }
 
     /**
-     * @param Tenant $tenant
+     * @param Tenant|null $tenant
      *
      * @return self
      */
-    public function setTenant(Tenant $tenant)
+    public function setTenant(Tenant $tenant = null)
     {
+        if (null === $tenant) {
+            $this->tenant->removeUser($this);
+            $this->tenant = null;
+            return $this;
+        }
+
         $this->tenant = $tenant;
         $this->tenant->addUser($this);
 
