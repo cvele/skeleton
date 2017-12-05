@@ -65,13 +65,10 @@ class UserManipulator
     public function create($user) : UserInterface
     {
         if (!$user instanceof UserInterface) {
-            $userClass= $this->userManager->getClass();
+            $userClass = $this->userManager->createUser();
             /** @var UserInterface **/
             $user = $userClass::fromArray($user);
         }
-        
-        $event = new UserEvent($user, $this->getRequest());
-        $this->dispatcher->dispatch(EventRegistry::USER_PRE_CREATED, $event);
 
         $this->userManager->updateUser($user);
 
@@ -94,9 +91,6 @@ class UserManipulator
 
         $user->setActive(true);
 
-        $event = new UserEvent($user, $this->getRequest());
-        $this->dispatcher->dispatch(EventRegistry::USER_PRE_ACTIVATE, $event);
-
         $this->userManager->updateUser($user);
 
         $event = new UserEvent($user, $this->getRequest());
@@ -115,9 +109,6 @@ class UserManipulator
         }
 
         $user->setActive(false);
-
-        $event = new UserEvent($user, $this->getRequest());
-        $this->dispatcher->dispatch(EventRegistry::USER_PRE_DEACTIVATE, $event);
 
         $this->userManager->updateUser($user);
 
@@ -138,9 +129,6 @@ class UserManipulator
         }
 
         $user->setPlainPassword($password);
-
-        $event = new UserEvent($user, $this->getRequest());
-        $this->dispatcher->dispatch(EventRegistry::USER_PRE_PASSWORD_CHANGED, $event);
 
         $this->userManager->updateUser($user);
 
