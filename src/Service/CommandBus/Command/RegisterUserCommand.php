@@ -9,9 +9,11 @@ class RegisterUserCommand
     /** @var UserInterface * */
     private $user;
 
+    /**
+     * @param UserInterface $user
+     */
     public function __construct(UserInterface $user)
     {
-        /* @var UserInterface **/
         $this->user = $user;
     }
 
