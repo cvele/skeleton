@@ -39,6 +39,7 @@ class UserFixtures extends Fixture
             $user->setActive($this->faker->boolean($chanceOfGettingTrue = 90));
             $user->setConfirmed($this->faker->boolean($chanceOfGettingTrue = 80));
             $user->setTenant($this->getReference('tenant-'.rand(1, 2)));
+            $user->getTenant()->setOwner($user);
             $command = new RegisterUserCommand($user);
             $this->commandBus->handle($command);
             $this->addReference('user-reference-'.$safeEmail, $user);

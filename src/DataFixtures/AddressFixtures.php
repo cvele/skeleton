@@ -31,7 +31,7 @@ class AddressFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        $users = $this->em->getRepository(User::class)->find();
+        $users = $this->em->getRepository(User::class)->findAll();
         foreach ($users as $user) {
             $address = new Address();
             $address->setAddress($this->faker->streetName);

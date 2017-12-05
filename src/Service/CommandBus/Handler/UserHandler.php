@@ -51,6 +51,13 @@ class UserHandler extends Handler
             $this->tokenGenerator->generate()
         );
 
+        $tenant = $user->getTenant();
+        if (false === $this->getEntityManager()->contains($tenant)) {
+            if (null === $tenant->getOwner()) {
+                $tenant->setOwner($user);
+            }
+        }
+
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
 

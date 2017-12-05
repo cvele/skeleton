@@ -45,7 +45,7 @@ class Tenant extends Entity
 
     /**
      * @ORM\OneToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id", onDelete="cascade")
      *
      * @var UserInterface
      */
