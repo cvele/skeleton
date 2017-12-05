@@ -1,11 +1,6 @@
 services:
     Symfony\Component\Security\Core\Authorization\AuthorizationChecker: '@security.authorization_checker'
 
-    App\Service\Security\UserManagerInterface: '@App\Service\Security\UserManager'
-
-    App\Service\Security\UserManager:
-        class: App\Service\Security\UserManager
-
     App\Service\Security\PasswordUpdaterInterface: '@App\Service\Security\PasswordUpdater'
 
     App\Service\Security\PasswordUpdater:

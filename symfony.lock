@@ -352,5 +352,17 @@
             "version": "3.1",
             "ref": "c24944bd87dacf0bb8fa218dc21e4a70fff56882"
         }
+    },
+    "league/tactician": {
+        "version": "v1.0.3"
+    },
+    "league/tactician-container": {
+        "version": "2.0.0"
+    },
+    "league/tactician-bundle": {
+        "version": "v1.1.1"
+    },
+    "league/tactician-doctrine": {
+        "version": "v1.1"
     }
 }

@@ -1,0 +1,8 @@
+tactician:
+    method_inflector: tactician.handler.method_name_inflector.handle_class_name_without_suffix
+    commandbus:
+        default:
+            middleware:
+                - tactician.middleware.doctrine
+                - tactician.middleware.validator
+                - tactician.middleware.command_handler

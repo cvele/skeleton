@@ -1,5 +1,7 @@
 imports:
     - { resource: services/doctrine.yaml }
+    - { resource: services/repository.yaml }
+    - { resource: services/command_bus.yaml }
     - { resource: services/security.yaml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed

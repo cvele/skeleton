@@ -1,0 +1,13 @@
+services:
+    app.user.handler:
+        class: App\Service\CommandBus\Handler\UserHandler
+        arguments:
+            - '@App\Service\Security\PasswordUpdaterInterface'
+            - '@App\Service\Security\UserCanonicalFieldsUpdater'
+            - '@App\Service\TokenGeneratorInterface'
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - '@Symfony\Component\EventDispatcher\EventDispatcherInterface'
+        tags:
+            - { name: tactician.handler, typehints: true }
+
+    League\Tactician\CommandBus: "@tactician.commandbus"
