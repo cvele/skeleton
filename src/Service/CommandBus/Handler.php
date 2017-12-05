@@ -25,13 +25,8 @@ class Handler
      */
     public function __construct(CommandBus $commandBus, EntityManagerInterface $entityManager, EventDispatcherInterface $dispatcher)
     {
-        /* @var CommandBus **/
         $this->commandBus = $commandBus;
-
-        /* @var EntityManagerInterface **/
         $this->entityManager = $entityManager;
-
-        /* @var EventDispatcherInterface **/
         $this->dispatcher = $dispatcher;
     }
 
